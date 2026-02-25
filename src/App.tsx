@@ -1,10 +1,11 @@
+import ToDo from "./Componentes/toDo"
 
 function App() {
 
 
   return (
     <>
-      <h1>Hola Grupo 2</h1>
+      <ToDo/>
     </>
   )
 }
