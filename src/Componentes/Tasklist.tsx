@@ -1,38 +1,5 @@
 import type { taskI } from "../interfaces/taskI";
 
-// Arreglo de tareas
-const tareas: taskI[] = [
-  {
-    id: 1,
-    name: "Comprar baleadas",
-    description: "Pedir una baleada con todo.",
-    dueDate: "20/02/2025",
-    dateCreated: "15/02/2025",
-    priority: "Alta",
-    status: "Pendiente ",
-    expired: true,
-  },
-  {
-    id: 2,
-    name: "Preparar presentación del proyecto",
-    description: "Preparar presentación en PowerPoint para el proyecto final.",
-    dueDate: "28/03/2026",
-    dateCreated: "15/12/2025",
-    priority: "Media",
-    status: "Pendiente ",
-    expired: false,
-  },
-  {
-    id: 3,
-    name: "Preparar presentación del proyecto",
-    description: "Preparar presentación en PowerPoint para el proyecto final.",
-    dueDate: "10/05/2026",
-    dateCreated: "12/02/2026",
-    priority: "Baja",
-    status: "Completada",
-    expired: false,
-  },
-];
 
 
 //Relacionamos el objeto a un color según su prioridad
