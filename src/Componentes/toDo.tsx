@@ -1,7 +1,7 @@
 import TaskList from "./Tasklist";
 import { useTask } from "../hooks/useTask";
 import { useForm } from "../hooks/useForm";
-import type { taskFormI } from "../interfaces/TaskForml"; 
+import type { taskFormI } from "../Interfaces/TaskForml"; 
 import type { taskI } from "../interfaces/taskI";
 
 function ToDo() {

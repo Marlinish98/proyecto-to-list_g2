@@ -1,11 +1,11 @@
 import { useState, type ChangeEvent } from "react";
 
-export const useForm = <T extends Record<string, unknown>>(initialState: T) => {
+export const useForm = <T extends { name?: string; dueDate?: string }>(initialState: T) => {
   const [form, setForm] = useState<T>(initialState);
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-  const { name, value } = target;
-     setForm({ ...form, [name]: value as T[keyof T] });
+    const { name, value } = target;
+    setForm({ ...form, [name]: value as T[keyof T] });
   };
 
   const handleDirectChange = <K extends keyof T>(name: K, value: T[K]) => {
@@ -13,20 +13,23 @@ export const useForm = <T extends Record<string, unknown>>(initialState: T) => {
   };
 
   const resetForm = () => setForm(initialState);
+
   const validateBeforeSubmit = (): boolean => {
-  const nameValue = (form.name as string) || "";
-  const dateValue = form.date;
+    const nameValue = form.name || "";
+    const dateValue = form.dueDate;
 
     if (nameValue.trim() === "") {
-     alert("El nombre no puede estar vacío");
-     return false;
+      alert("El nombre no puede estar vacio");
+      return false;
     }
 
     if (!dateValue) {
       alert("Selecciona una fecha en el calendario");
       return false;
     }
-    return true;};
+
+    return true;
+  };
 
   return {
     ...form,
@@ -34,6 +37,6 @@ export const useForm = <T extends Record<string, unknown>>(initialState: T) => {
     handleChange,
     handleDirectChange,
     resetForm,
-    validateBeforeSubmit
+    validateBeforeSubmit,
   };
 };

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import type { taskI } from "../interfaces/taskI"
-import type { taskFormI } from "../interfaces/TaskFormI"
+import type { taskFormI } from "../Interfaces/TaskFormI"
 
 function parseDate(dateString: string): Date {
     const [day, month, year] = dateString.split("/").map(Number)
