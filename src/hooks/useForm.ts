@@ -1,4 +1,6 @@
 import { useState, type ChangeEvent } from "react";
+import Swal from "sweetalert2"
+
 
 export const useForm = <T extends { name?: string; dueDate?: string }>(initialState: T) => {
   const [form, setForm] = useState<T>(initialState);
@@ -19,12 +21,22 @@ export const useForm = <T extends { name?: string; dueDate?: string }>(initialSt
     const dateValue = form.dueDate;
 
     if (nameValue.trim() === "") {
-      alert("El nombre no puede estar vacio");
+      Swal.fire({
+        icon: "info",
+        title: "El nombre es obligatorio",
+        timer: 2000,
+        showConfirmButton: false,
+      });
       return false;
     }
 
     if (!dateValue) {
-      alert("Selecciona una fecha en el calendario");
+        Swal.fire({
+        icon: "info",
+        title: "Fecha límite es obligatoria",
+        timer: 2000,
+        showConfirmButton: false,
+      });
       return false;
     }
 

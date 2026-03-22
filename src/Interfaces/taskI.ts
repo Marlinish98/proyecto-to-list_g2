@@ -5,6 +5,6 @@ export interface taskI{
     dueDate:string;
     dateCreated:string;
     priority:'Baja' | 'Media' | 'Alta';
-    status:'Pendiente ' | 'Completada';
+    status:'Pendiente' | 'Completada';
     expired:boolean;
 }

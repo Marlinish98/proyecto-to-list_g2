@@ -1,16 +1,13 @@
-import TaskList from "./Tasklist";
-import { useTask } from "../hooks/useTask";
-import { useForm } from "../hooks/useForm";
-import type { taskFormI } from "../Interfaces/TaskForml"; 
-import type { taskI } from "../interfaces/taskI";
+import { useForm } from "../Hooks/useForm";
+import type { taskFormI } from "../Interfaces/TaskFormI";
+import type { taskI } from "../Interfaces/taskI";
+import type { ToDoProps } from "../Interfaces/ToDoProps";
+import toast, { Toaster } from 'react-hot-toast';
 
-function ToDo() {
-    // 1. Lógica de Hooks (Dentro de la función)
-    const { addTask, tasks } = useTask();
-    const { 
-        name, description, dueDate, priority, 
-        handleChange, handleDirectChange, resetForm, form 
-    } = useForm<taskFormI>({
+
+
+const ToDo: React.FC<ToDoProps> = ({ addTask }) => {
+    const { name, description, dueDate, priority, handleChange, handleDirectChange, resetForm, validateBeforeSubmit, form } = useForm<taskFormI>({
         name: "",
         description: "",
         dueDate: "",
@@ -18,13 +15,17 @@ function ToDo() {
     });
 
     const onSave = () => {
-        if (!name.trim()) return alert("El nombre es obligatorio");
-        addTask(form); //
+        if (!validateBeforeSubmit()) 
+        return;
+        addTask(form);
         resetForm();
+        toast.success("Tarea guardada correctamente");
     };
+    
 
     return (
-        <div className="min-h-screen bg-gray-950 px-4 py-0 font-sans text-white">
+        <div className="h-auto bg-gray-950 font-sans text-white">
+            <Toaster position="top-center"/>
 
             {/* Header */}
             <header className="mb-8 bg-blue-700 py-5 text-center -mx-4">
@@ -32,7 +33,7 @@ function ToDo() {
                 <p className="mt-1 text-sm text-blue-200">Tus tareas, en las mejores manos</p>
             </header>
 
-            <div className="mx-auto max-w-xl space-y-8">
+            <div className="mx-auto max-w-xl pb-10">
 
                 <div className="rounded-2xl bg-gray-800 p-6 shadow-xl">
                     <h2 className="mb-5 text-lg font-bold">📋 Nueva tarea</h2>
@@ -78,7 +79,7 @@ function ToDo() {
 
                         {/* Prioridad */}
                         <div>
-                            <label className="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray-300">⚡ Prioridad</label>
+                            <label className="mb-2 block text-xs font-semibold uppercase tracking-widest text-gray-300 text-center">⚡ Prioridad</label>
                             <div className="flex gap-4 justify-center mb-4">
                                 {(["Baja", "Media", "Alta"] as taskI["priority"][]).map((p) => (
                                     <label key={p} className="flex cursor-pointer items-center gap-2 text-sm">
@@ -104,9 +105,7 @@ function ToDo() {
                         </button>
                     </div>
                 </div>
-
-                {/* Lista de Tareas */}
-                <TaskList tasks={tasks} /> 
+                
             </div>
         </div>
     );
