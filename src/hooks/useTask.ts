@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
-import type { taskI } from "../interfaces/taskI"
+import type { taskI } from "../Interfaces/taskI"
 import type { taskFormI } from "../Interfaces/TaskFormI"
+import Swal from "sweetalert2"
 
 function parseDate(dateString: string): Date {
     const [day, month, year] = dateString.split("/").map(Number)
@@ -14,7 +15,7 @@ function isExpired(task: taskI): boolean {
     const due = parseDate(task.dueDate)
     due.setHours(0, 0, 0, 0)
 
-    return task.status === "Pendiente " && due < today
+    return task.status === "Pendiente" && due < today
 }
 
 export const useTask = () => {
@@ -46,25 +47,81 @@ export const useTask = () => {
             dueDate: dueDateFormatted,
             dateCreated,
             priority: form.priority,
-            status: "Pendiente ",
-            expired: isExpired({ dueDate: dueDateFormatted, status: "Pendiente " } as taskI),
+            status: "Pendiente",
+            expired: isExpired({ dueDate: dueDateFormatted, status: "Pendiente" } as taskI),
         }
 
         setTasks((prev) => [newTask, ...prev])
+
     }
 
     const completeTask = (id: number): void => {
-        setTasks((prev) =>
-            prev.map((t) => t.id === id ? { ...t, status: "Completada", expired: false } : t)
+        Swal.fire({
+            icon: "info",
+            text: "¿Desea completar esta tarea?",
+            showCancelButton: true,
+            confirmButtonText: "Sí, completar",
+            cancelButtonText: "No, cancelar",
+            confirmButtonColor: "#008000",
+            cancelButtonColor: "#d33",
+        }).then((resultado) => {
+            if (resultado.isConfirmed) {
+                setTasks((prev) =>
+                    prev.map((t) => t.id === id ? { ...t, status: "Completada", expired: false } : t))
+                Swal.fire({
+                    icon: "success",
+                    title: "Tarea completada",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            }
+        }
         )
-    }
-
+    };
     const deleteTask = (id: number): void => {
-        setTasks((prev) => prev.filter((t) => t.id !== id))
+        Swal.fire({
+            title: "¿Desea eliminar esta tarea?",
+            text: "No podra revertir esta acción",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#008000",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, Eliminar",
+            cancelButtonText: "Cancelar"
+        }).then((resultado) => {
+            if (resultado.isConfirmed) {
+                setTasks((prev) => prev.filter((t) => t.id !== id));
+                Swal.fire({
+                    icon: "success",
+                    title: "Tarea eliminada",
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+            }
+        });
     }
 
     const clearAllTasks = (): void => {
-        setTasks([])
+         Swal.fire({
+            title: "¿Desea eliminar todas las tarea?",
+            text: "Esta accion no sera reversible",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#008000",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, Eliminar",
+            cancelButtonText: "Cancelar"
+        }).then((resultado) => {
+            if (resultado.isConfirmed) {
+                setTasks([]);
+                Swal.fire({
+                    icon: "success",
+                    title: "Tareas eliminadas exitosamente",
+                    showConfirmButton: false,
+                    timer: 4000,
+                });
+            }
+        });
     }
 
     const sortByDate = (): void => {

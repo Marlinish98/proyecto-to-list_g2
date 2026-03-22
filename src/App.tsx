@@ -1,11 +1,9 @@
-import ToDo from "./Componentes/toDo"
+import GestionToDo from "./Componentes/gestionToDo"
 
 function App() {
-
-
   return (
     <>
-      <ToDo />
+      < GestionToDo />
     </>
   )
 }
