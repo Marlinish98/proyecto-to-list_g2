@@ -17,7 +17,7 @@ function TaskCard({ task, completeTask, deleteTask }: TaskCardProps) {
   return (
     <div className="">
       <div className={`rounded-xl border p-4 sm:p-5 ${task.expired
-        ? "border-red-700 bg-red-950/60"
+        ? "border-red-100 bg-red-950/60"
         : task.status === "Completada"
           ? "border-gray-700 bg-gray-900/60 opacity-75"
           : "border-gray-700 bg-gray-900/60"
