@@ -1,4 +1,4 @@
-import { useTask } from "../Hooks/useTask";
+import { useTask } from "../hooks/useTask";
 import Tasklist from "./Tasklist";
 import ToDo from "./toDo";
 import { FaGithub } from 'react-icons/fa';

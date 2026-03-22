@@ -1,7 +1,7 @@
-import { useForm } from "../Hooks/useForm";
-import type { taskFormI } from "../Interfaces/TaskFormI";
-import type { taskI } from "../Interfaces/taskI";
-import type { ToDoProps } from "../Interfaces/ToDoProps";
+import { useForm } from "../hooks/useForm";
+import type { taskFormI } from "../interfaces/TaskFormI";
+import type { taskI } from "../interfaces/taskI";
+import type { ToDoProps } from "../interfaces/ToDoProps";
 import toast, { Toaster } from 'react-hot-toast';
 
 
@@ -54,7 +54,7 @@ const ToDo: React.FC<ToDoProps> = ({ addTask }) => {
 
                         {/* Descripción */}
                         <div>
-                            <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-gray-300">Descripción</label>
+                            <label className="mb-1 block text-xs font-semibold uppercase tracking-widest text-white">Descripción</label>
                             <textarea
                                 name="description"
                                 value={description}
