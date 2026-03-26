@@ -1,6 +1,6 @@
-import type { taskI } from "../Interfaces/taskI";
-import type { TaskListProps } from "../Interfaces/TaskListProps";
-import type { TaskCardProps } from "../Interfaces/TaskCardProps";
+import type { taskI } from "../interfaces/taskI";
+import type { TaskListProps } from "../interfaces/TaskListProps";
+import type { TaskCardProps } from "../interfaces/TaskCardProps";
 import { useState } from "react";
 import { AiFillAlert } from "react-icons/ai";
 import { FcTodoList } from "react-icons/fc";
@@ -17,7 +17,7 @@ function TaskCard({ task, completeTask, deleteTask }: TaskCardProps) {
   return (
     <div className="">
       <div className={`rounded-xl border p-4 sm:p-5 ${task.expired
-        ? "border-red-700 bg-red-950/60"
+        ? "border-red-100 bg-red-950/60"
         : task.status === "Completada"
           ? "border-gray-700 bg-gray-900/60 opacity-75"
           : "border-gray-700 bg-gray-900/60"
@@ -38,7 +38,7 @@ function TaskCard({ task, completeTask, deleteTask }: TaskCardProps) {
               {task.name.toUpperCase()}
             </h3>
             {task.description && (
-              <p className="mt-1 text-xs sm:text-sm text-gray-400">{task.description}</p>
+              <p className="mt-1 text-xs sm:text-sm text-white">{task.description}</p>
             )}
           </div>
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 shrink-0">
@@ -147,7 +147,8 @@ const Tasklist: React.FC<TaskListProps> = ({
           ))}
           <p className="text-white">|</p>
           <p className="bg-yellow-400 px-2 rounded-lg text-xs sm:text-sm">
-            Tareas pendientes: {tareas.filter(t=>t.status === "Pendiente" && !t.expired).length}</p>
+            Tareas pendientes: {tareas.filter(t => t.status === "Pendiente" && !t.expired).length}
+          </p>
         </div>
       </div>
 
