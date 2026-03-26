@@ -46,7 +46,11 @@ function TaskCard({ task, completeTask, deleteTask }: TaskCardProps) {
               className={`rounded-full px-3 py-0.5 text-xs sm:text-sm font-semibold ${task.status === "Completada" ? "bg-green-700 text-white" : "bg-blue-700 text-white"
                 }`}
             >
-              {task.status === "Completada" ? "✓ Completada" : "⏳ Pendiente"}
+              {task.expired
+  ? "⚠️ Vencida"
+  : task.status === "Completada"
+    ? "✓ Completada"
+    : "⏳ Pendiente"}
             </span>
             <span className={`rounded-full px-3 py-0.5 text-xs sm:text-sm font-semibold ${priorityStyle[task.priority]}`}>
               ⚡ {task.priority}
@@ -93,12 +97,25 @@ const Tasklist: React.FC<TaskListProps> = ({
     );
   }
 
-  const [filtro, setFiltro] = useState<"Todas" | "Pendiente" | "Completada">("Todas");
+  const [filtro, setFiltro] = useState<"Todas" | "Pendiente" | "Completada" | "Vencida">("Todas");
 
-  const tareasFiltradas = tareas.filter((task) => {
-    if (filtro === "Todas") return true;
-    return task.status.toLowerCase() === filtro.toLowerCase();
-  });
+ const tareasFiltradas = tareas.filter((task) => {
+  if (filtro === "Todas") return true;
+
+  if (filtro === "Pendiente") {
+    return task.status === "Pendiente" && !task.expired;
+  }
+
+  if (filtro === "Completada") {
+    return task.status === "Completada";
+  }
+
+  if (filtro === "Vencida") {
+    return task.expired;
+  }
+
+  return true;
+});
 
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-20 xl:px-30">
@@ -116,7 +133,7 @@ const Tasklist: React.FC<TaskListProps> = ({
           <span className="text-xs sm:text-sm font-semibold uppercase tracking-widest text-gray-400">
             Estado:
           </span>
-          {(["Todas", "Pendiente", "Completada"] as const).map((s) => (
+          {(["Todas", "Pendiente",  "Vencida", "Completada"] as const).map((s) => (
             <button
               key={s}
               onClick={() => setFiltro(s)}
@@ -129,7 +146,8 @@ const Tasklist: React.FC<TaskListProps> = ({
             </button>
           ))}
           <p className="text-white">|</p>
-          <p className="bg-yellow-400 px-2 rounded-lg text-xs sm:text-sm">Tareas pendientes: {tareas.length}</p>
+          <p className="bg-yellow-400 px-2 rounded-lg text-xs sm:text-sm">
+            Tareas pendientes: {tareas.filter(t=>t.status === "Pendiente" && !t.expired).length}</p>
         </div>
       </div>
 

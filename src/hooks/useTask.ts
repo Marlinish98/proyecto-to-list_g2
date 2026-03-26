@@ -72,7 +72,7 @@ export const useTask = () => {
                     icon: "success",
                     title: "Tarea completada",
                     showConfirmButton: false,
-                    timer: 2000,
+                    timer: 3000,
                 });
             }
         }
